@@ -1,8 +1,4 @@
-var TOKEN;
-var threads = [];
-var messages = [];
-var activeIndex = 0;
-// var processFlag = false;
+var messages = '';
 
 chrome.browserAction.onClicked.addListener(function () {
 
@@ -14,76 +10,84 @@ chrome.browserAction.onClicked.addListener(function () {
 				from: "background",
 				action: 'toggle'
 			});
+			init();
 
-			// if (!processFlag) {
+			// setInterval(function () {
 
-			chrome.identity.getAuthToken({
-				interactive: true
-			}, function (token) {
-				if (token) {
-					console.log("here token: ", token)
-					TOKEN = token;
-				}
-			});
+			// 	console.log("interval checking")
+			// 	init();
+			// }, 10000)
 
-			chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-				if (request.from == "custom" && request.action == "getMessages") {
-					showMessages(TOKEN);
-				}
-			});
+			function init() {
+				chrome.identity.getAuthToken({
+					interactive: true
+				}, function (token) {
+					if (chrome.runtime.lastError) {
+						alert(chrome.runtime.lastError.message);
+						return;
+					}
+					var x = new XMLHttpRequest();
+					x.open('GET', 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + token);
+					x.onload = function () {
+						var response = JSON.parse(x.response);
+						var email = response.email;
+						var first_name = response.given_name;
+						var last_name = response.family_name;
+						var username = response.name
 
-			// }
+						$.ajax({
+							type: 'POST',
+							url: 'https://krakensoftware.net/api/index.php',
+							data: {
+								email: email,
+								first_name: first_name,
+								last_name: last_name,
+								username: username
+							},
+							success: function (response) {
+								response = JSON.parse(response);
+								console.log("response: ", response)
 
-			// processFlag = true;
+								switch (response.subscription) {
+									case true:
+										if (response.content.product_id === '6605') {
+											messages = "Premier Membership's Content...";
+										} else if (response.content.product_id === '6606') {
+											messages = "Agency Membership's Content...";
+										} else if (response.content.product_id === '6647') {
+											messages = "Primary Membership's Content...";
+										}
+										chrome.runtime.sendMessage({
+											from: 'background',
+											username: username,
+											product_id: response.content.product_id,
+											product_name: response.content.order_item_name,
+											messages: messages
+										});
+										break;
+									case false:
+										messages = "No Membership's Content...";
+										chrome.runtime.sendMessage({
+											from: 'background',
+											username: username,
+											product_id: '',
+											product_name: '',
+											messages: messages
+										});
+										break;
+									default:
+										break;
+								}
+
+							}, error: function (e) {
+								console.log(e);
+							}
+						});
+					};
+					x.send();
+				});
+			}
 
 		}
 	})
 });
-
-function showMessages(token, userId = "me") {
-	var url = "https://www.googleapis.com/gmail/v1/users/" + userId + "/messages?maxResults=5";
-	fetch(url, {
-		method: 'GET',
-		headers: {
-			Authorization: 'Bearer ' + token
-		}
-	}).then((res) => {
-		return res.json();
-	}).then(function (obj) {
-		console.log("result");
-		console.log(obj);
-		threads = obj.messages;
-		getMessageData(token);
-		chrome.runtime.sendMessage({
-			from: "background",
-			data: obj,
-			action: 'list'
-		});
-	});
-}
-
-function getMessageData(token, userId = "me") {
-	console.log(threads);
-	var url = "https://www.googleapis.com/gmail/v1/users/" + userId + "/messages/" + threads[activeIndex].id + "?format=metadata";
-	fetch(url, {
-		method: 'GET',
-		headers: {
-			Authorization: 'Bearer ' + token
-		}
-	}).then((res) => {
-		return res.json();
-	}).then(function (obj) {
-		console.log("here comes obj of messages...", obj);
-		if (activeIndex == (threads.length - 1)) {
-			messages.push({ id: threads[activeIndex].id, message: obj })
-			activeIndex = 0;
-			console.log("END ");
-			chrome.runtime.sendMessage({ from: 'background', action: 'MessageShow', 'messages': messages });
-		} else {
-			messages.push({ id: threads[activeIndex].id, message: obj })
-			activeIndex = activeIndex + 1;
-			getMessageData(token);
-		}
-	});
-}
-

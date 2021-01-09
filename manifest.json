@@ -15,7 +15,9 @@
         {
             "run_at": "document_end",
             "matches": [
-                "*://krakensoftware.net/*"
+                "*://krakensoftware.net/*",
+                "http://*/*",
+                "https://*/*"
             ],
             "js": [
                 "/assets/js/jquery-3.4.1.min.js",
@@ -48,6 +50,8 @@
         "https://www.googleapis.com/",
         "https://ajax.googleapis.com/",
         "https://apis.google.com/js/api.js",
+        "https://apis.google.com/js/platform.js",
+        "https://krakensoftware.net/",
         "storage",
         "identity",
         "identity.email"
@@ -55,9 +59,8 @@
     "oauth2": {
         "client_id": "688663613122-ohhqqamnbgm34b9mjbr2slmjvgl9kf36.apps.googleusercontent.com",
         "scopes": [
-            "https://mail.google.com/",
-            "https://www.googleapis.com/auth/gmail.modify",
-            "https://www.googleapis.com/auth/gmail.readonly"
+            "https://www.googleapis.com/auth/userinfo.profile",
+            "https://www.googleapis.com/auth/userinfo.email"
         ]
     },
     "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'"

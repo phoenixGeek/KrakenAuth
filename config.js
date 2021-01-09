@@ -1,3 +1,3 @@
 var _config = {
-	apiBaseUrl:'http://trigvent.com/chrome-web-app/api',
+	apiBaseUrl: 'https://krakensoftware.net/api',
 }

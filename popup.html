@@ -1,204 +1,26 @@
 <html>
-    <head>
-        <title>Click to Call Extension</title>
-        <meta charset="utf-8">      
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
-        <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
-        <link href="assets/css/titatoggle-dist.css" rel="stylesheet">
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        
-        <link href="assets/css/simplebar.min.css" rel="stylesheet" />
-        <link href="assets/css/extension.css" rel="stylesheet" />
-        <link href="assets/css/placeholder-animation.css" rel="stylesheet" />
-    </head>
-    <body>
-		<div id="dashboard" class="card tabs">
-            <div class="card-body ext-body">
-                <div><button type="button" id="login" class="btn btn-primary">Login</button></div>
-                <div class="Login initial-tabs container">
-                    <div class="msg" ></div>
-                   <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                              <th>Id</th>
-                              <th>Label</th>                          
-                            </tr>
-                        </thead>
-                        <tbody id="tableRow">
-                              
-                        </tbody>
-                    </table>
-                </div> 
-                <div id="loader"  class="bs4-loader" >
-                    <div class="spinner-grow text-muted"></div>
-					<div class="spinner-grow text-primary"></div>
-					<div class="spinner-grow text-success"></div>
-					<div class="spinner-grow text-info"></div>
-					<div class="spinner-grow text-warning"></div>
-					<div class="spinner-grow text-danger"></div>
-					<div class="spinner-grow text-secondary"></div>
-					<div class="spinner-grow text-dark"></div>
-					<div class="spinner-grow text-light"></div>
-                </div>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+</head>
 
-                </div>
-                <footer class="text-center">                
-                <hr>
-                   <p>Powered by <a target="_blank" class="company_url" href="javascript:void(0)">chrome web app</a></p>
-                </footer>
-            </div>
-        </div>
-		
-        <div id="tab1" class="card tabs">
-            <div class="card-body ext-body">
-                <div class="logo text-center">
-                    <img src="assets/images/logo.png" alt="" width="120">
-                </div>
-                <div class="Login initial-tabs container">
-                    <div class="msg" ></div>
-                    <form name="login_form" id="login_form">
-                        <fieldset class="formRow">
-                            <div class="form-group formRow--item">
-                                <label for="email" class="formRow--input-wrapper js-inputWrapper">        
-                                    <input type="text" name="email" class="form-control formRow--input js-input" id="email" placeholder="Enter email">
-                                </label>
-                            </div>
-                        </fieldset>
-                        
-                        <fieldset class="formRow">
-                            <div class="form-group formRow--item">
-                                <label for="password" class="formRow--input-wrapper js-inputWrapper">         
-                                    <input type="password" name="password" class="form-control formRow--input js-input" id="password" placeholder="Password">
-                                </label>
-                            </div>
-                        </fieldset>
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Login</button> 
-							<button type="button" id="dashboardback" class="btn btn-primary">Back</button>
-                        </div>
-                    </form> 
-                    <div class="row">
-                        <div class="col-12 text-center">
-                                OR<br><br>
-                            <button id="google_login_btn" type="button" class="btn btn-primary btn-block">Login with Google</button>    
-                        </div>
-                    </div>
-                </div>
-                <footer class="text-center">                
-                <hr>
-                   <p>Powered by <a target="_blank" class="company_url" href="javascript:void(0)">chrome web app</a></p>
-                </footer>
-            </div>
-        </div>
-      
-        <div id="tab2" class="card tabs">
-            <header>
-                <ul class="navbar ml-auto">
-                    <li class="nav-item">
-                        <img src="assets/images/logo.png" alt="" width="60" style="margin:10px 25px 0 10px">
-                    </li>
-                    <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link board-request-link active">
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="javascript:void(0)" title="Logout" class="nav-link logout-link">
-                            Logout
-                        </a>
-                    </li>
-                </ul>
+<body>
+    <div class="container">
 
-            </header>
-            <div class="ext-body" id="main-wrapper">
-                <div class="container">
-                    Welcome <span id="user-name"></span> 
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                              <th>Id</th>
-                              <th>Label</th>                          
-                              <th>Snippet</th>                          
-                            </tr>
-                        </thead>
-                        <tbody id="tableRow2">
-                              
-                        </tbody>
-                    </table>
-                </div> 
-                <div id="loader"  class="bs4-loader" >
-                    <div class="spinner-grow text-muted"></div>
-					<div class="spinner-grow text-primary"></div>
-					<div class="spinner-grow text-success"></div>
-					<div class="spinner-grow text-info"></div>
-					<div class="spinner-grow text-warning"></div>
-					<div class="spinner-grow text-danger"></div>
-					<div class="spinner-grow text-secondary"></div>
-					<div class="spinner-grow text-dark"></div>
-					<div class="spinner-grow text-light"></div>
-                </div>
-                <footer class="text-center">                
-                    <hr>
-                   <p>Powered by <a target="_blank" class="company_url" href="javascript:void(0)">chrome web app</a></p>
-                </footer>           
-            </div>
+        <div id="content">
         </div>
-	
-		<div id="tab1" class="card tabs">
-            <div class="card-body ext-body">
-                <div class="logo text-center">
-                    <img src="assets/images/logo.png" alt="" width="120">
-                </div>
-                <div class="Login initial-tabs container">
-                    <div class="msg" ></div>
-                    <form name="login_form" id="login_form">
-                        <fieldset class="formRow">
-                            <div class="form-group formRow--item">
-                                <label for="email" class="formRow--input-wrapper js-inputWrapper">        
-                                    <input type="text" name="email" class="form-control formRow--input js-input" id="email" placeholder="Enter email">
-                                </label>
-                            </div>
-                        </fieldset>
-                        
-                        <fieldset class="formRow">
-                            <div class="form-group formRow--item">
-                                <label for="password" class="formRow--input-wrapper js-inputWrapper">         
-                                    <input type="password" name="password" class="form-control formRow--input js-input" id="password" placeholder="Password">
-                                </label>
-                            </div>
-                        </fieldset>
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </div>
-                    </form> 
-                    <div class="row">
-                        <div class="col-12 text-center">
-                                OR<br><br>
-                            <button id="google_login_btn" type="button" class="btn btn-primary btn-block">Login with Google</button>    
-                        </div>
-                    </div>
-                </div>
-                <footer class="text-center">                
-                <hr>
-                   <p>Powered by <a target="_blank" class="company_url" href="javascript:void(0)">chrome web app</a></p>
-                </footer>
-            </div>
-        </div>
-		
-		
-		
-        <script src="assets/js/jquery-3.4.1.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/js/jquery.validate.js"></script>
-        <script src="assets/js/jquery.scrolly.min.js"></script>
-        <script src="assets/js/simplebar.js"></script>
-        <script src="config.js"></script>       
-        <script src="assets/js/custom.js"></script>     
-        <script src="assets/js/placeholder-animation.js"></script>
-    </body>
-</html>  
+
+    </div>
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="config.js"></script>
+    <script src="assets/js/custom.js"></script>
+</body>
+
+
+</html>
